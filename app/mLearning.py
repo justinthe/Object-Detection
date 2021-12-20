@@ -9,7 +9,6 @@ import glob
 from pydub import AudioSegment
 from pydub.utils import make_chunks
 from tkinter import *
-from tkinter import ttk
 from tkinter import filedialog
 global path4
 
