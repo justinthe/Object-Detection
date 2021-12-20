@@ -3,7 +3,9 @@ from app import mLearning as ml #calling file mLearning.py from folder app as ml
 from flask import render_template
 import os, os.path
 import torch
+
 global path4
+
 """
 calling class from file .py and save it to a variable
 calling class Model from mLearning.py, and save it to a variable named models
@@ -28,9 +30,8 @@ input: a folder contain files of WP
 def tiling_images():
     path_in = directory.folder()
     base_path = directory.folder()
-    if len(path_in) == 0 and len(base_path) == 0:
-        return"specify the input and output path correctly"
-    else:
+        
+    try:
         path2 = os.listdir(path_in)
         last_path = os.path.basename(base_path)
         if os.path.exists(path4 + last_path) == True:
@@ -43,6 +44,8 @@ def tiling_images():
                     tiling.make_tile(path_in,base_path)
                     return "the results is ready on" + str(path4 + last_path)
 
+    except:
+        return"<h1>specify the input and output path correctly: no space for folder naming</h1>"
 
 
 """
@@ -60,18 +63,20 @@ def model():
     path_in = directory.folder()
     path_out = directory.folder()
 
-    if len(path_in) == 0 and len(path_out) == 0:
-        return"specify the input and output path correctly"
-    else:
+   
+    try:
         path2=os.listdir(path_in)
         
         for n in range(len(path2)):
             base = os.path.basename(path2[n])
             filename = os.path.splitext(base)[0]
-            image_path = path_in+'/'+filename
-            models.count_wpshp(n, filename,image_path,path_out,model)
+            image_path = path_in + '/' + filename
+            models.count_wpshp(n, filename, image_path, path_out, model)
             
-        return "the results is ready on "+str(path_out)
+        return "the results is ready on " + str(path_out)
+
+    except:
+        return"specify the input and output path correctly"
 
 """
 endpoint for roof detection
@@ -87,9 +92,8 @@ def roof_model():
     path_in = directory.folder()
     path_out = directory.folder()
 
-    if len(path_in) == 0 and len(path_out) == 0:
-        return"specify the input and output path correctly"
-    else:
+        
+    try:
         path2=os.listdir(path_in)
         
         for n in range(len(path2)):
@@ -99,3 +103,6 @@ def roof_model():
             models.count_wpshp(n, filename, image_path, path_out, model)
             
         return "the results is ready on " + str(path_out)
+    
+    except:
+        return"specify the input and output path correctly"
