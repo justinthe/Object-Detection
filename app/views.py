@@ -96,6 +96,6 @@ def roof_model():
             base = os.path.basename(path2[n])
             filename = os.path.splitext(base)[0]
             image_path = path_in+'/' + filename
-            models.count_wpshp(n, filename,image_path,path_out,model)
+            models.count_wpshp(n, filename, image_path, path_out, model)
             
         return "the results is ready on " + str(path_out)
