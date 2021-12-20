@@ -13,7 +13,7 @@ from tkinter import ttk
 from tkinter import filedialog
 global path4
 
-path4 = "G:/My Drive/"
+path4  = "G:/My Drive/"
 
 class Select_Dir:
   """
@@ -26,7 +26,7 @@ class Select_Dir:
     win.geometry("250x250")
     
     # Create a label and a Button to Open the dialog
-    path= filedialog.askdirectory(title="Select a Folder")
+    path = filedialog.askdirectory(title="Select a Folder")
     
     win.destroy()
     return path
@@ -50,17 +50,17 @@ class Tiling:
 
     #this is a loop for tiling every image in one directory
     for n in range(len(input_filename)):
-      base=os.path.basename(input_filename[n])
-      nama=os.path.splitext(base)[0]
+      base = os.path.basename(input_filename[n])
+      nama = os.path.splitext(base)[0]
       path = in_path+ '/'+ str(input_filename[n])
       
       ds = gdal.Open(path)
       band = ds.GetRasterBand(1)
-      xsize=band.XSize
-      ysize=band.YSize
+      xsize = band.XSize
+      ysize = band.YSize
 
       #creating directory before tiling
-      path1=baseDir + '/' + str(nama)
+      path1 = baseDir + '/' + str(nama)
       os.makedirs(path1)
       print(path1)
 
@@ -129,11 +129,15 @@ class Model:
       boredpile_ds["xmax"], boredpile_ds["ymax"] = geo.transform * (boredpile_ds.xmax, boredpile_ds.ymax)
 
       # removes unneeded columns 
-      boredpile_ds =boredpile_ds[['name', 'class', 'xmin', 'ymin', 'xmax', 'ymax', 'confidence']] 
+      boredpile_ds = boredpile_ds[[
+                    'name', 'class', 'xmin',
+                    'ymin', 'xmax', 'ymax', 
+                    'confidence'
+                    ]] 
       
       #appends result of each object (here in pandas df) to a list so to get one giant df
       total.append(boredpile_ds)
       
-    print("starting concat"+str(n))
-    total = pd.concat(total, ignore_index=True) #concatanate to list of results df to one big dataframe
+    print("starting concat" + str(n))
+    total = pd.concat(total, ignore_index = True) #concatanate to list of results df to one big dataframe
     total.to_csv(path_out + '/' + filename+".csv") #download csv of our shp file location
