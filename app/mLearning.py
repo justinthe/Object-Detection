@@ -13,14 +13,14 @@ from tkinter import ttk
 from tkinter import filedialog
 global path4
 
-path4="G:/My Drive/"
+path4 = "G:/My Drive/"
 
 class Select_Dir:
   """
   function for generate a dialog for select folder
   """
   def folder(self):
-    win= Tk()
+    win = Tk()
     
     # Define the geometry
     win.geometry("250x250")
@@ -38,7 +38,7 @@ class Tiling:
   input: path_in, path_out
   all the outputs will be moved to google drive automatically, once the tiling process done
   """
-  def make_tile(self,path_in, base_path):
+  def make_tile(self, path_in, base_path):
     #specify size of tiling
     tile_size_x = 500
     tile_size_y = 500
@@ -52,7 +52,7 @@ class Tiling:
     for n in range(len(input_filename)):
       base=os.path.basename(input_filename[n])
       nama=os.path.splitext(base)[0]
-      path = in_path+ '/'+str(input_filename[n])
+      path = in_path+ '/'+ str(input_filename[n])
       
       ds = gdal.Open(path)
       band = ds.GetRasterBand(1)
@@ -60,7 +60,7 @@ class Tiling:
       ysize=band.YSize
 
       #creating directory before tiling
-      path1=baseDir+'/'+str(nama)
+      path1=baseDir + '/' + str(nama)
       os.makedirs(path1)
       print(path1)
 
@@ -81,7 +81,7 @@ class Tiling:
 
 class Model:
 
-  def count_wpshp(self,n,filename,image_path,path_out,model,threshold=0.3):
+  def count_wpshp(self, n, filename, image_path, path_out, model, threshold=0.3):
     """
     inputs = TIFF file with coordinates, threshold
     outputs = CSV of lat long of object detected for GIS shp file
@@ -94,7 +94,7 @@ class Model:
     imgs = [] # contains all images in dir
     geos = [] # contains tiff coords in dir
     path = image_path
-    valid_images = [".jpg",".gif",".png",".tga",".tif",".tiff"]
+    valid_images = [".jpg", ".gif", ".png", ".tga", ".tif", ".tiff"]
     total = []
     
     print("starting first for"+str(n))
@@ -106,8 +106,8 @@ class Model:
         if ext.lower() not in valid_images:
             continue
         
-        imgs.append(Image.open(os.path.join(path,f))) #opens images 
-        geos.append(rasterio.open(os.path.join(path,f))) # gets coordinates of tiff
+        imgs.append(Image.open(os.path.join(path, f))) #opens images 
+        geos.append(rasterio.open(os.path.join(path, f))) # gets coordinates of tiff
     
     print("starting second for"+str(n))
     
@@ -120,20 +120,20 @@ class Model:
       to our xmin,xmax,ymin,ymax to convert to latlong
     """
 
-    for img,geo in zip(imgs,geos) : 
+    for img,geo in zip(imgs, geos) : 
       results = model(img) 
       boredpile_ds = results.pandas().xyxy[0] 
     
       # transforms coordinates to geoloc
-      boredpile_ds["xmin"], boredpile_ds["ymin"] = geo.transform * (boredpile_ds.xmin,boredpile_ds.ymin) 
+      boredpile_ds["xmin"], boredpile_ds["ymin"] = geo.transform * (boredpile_ds.xmin, boredpile_ds.ymin) 
       boredpile_ds["xmax"], boredpile_ds["ymax"] = geo.transform * (boredpile_ds.xmax, boredpile_ds.ymax)
 
       # removes unneeded columns 
-      boredpile_ds =boredpile_ds[['name','class','xmin', 'ymin', 'xmax','ymax','confidence']] 
+      boredpile_ds =boredpile_ds[['name', 'class', 'xmin', 'ymin', 'xmax', 'ymax', 'confidence']] 
       
       #appends result of each object (here in pandas df) to a list so to get one giant df
       total.append(boredpile_ds)
       
     print("starting concat"+str(n))
-    total = pd.concat(total,ignore_index=True) #concatanate to list of results df to one big dataframe
-    total.to_csv(path_out+'/'+filename+".csv") #download csv of our shp file location
+    total = pd.concat(total, ignore_index=True) #concatanate to list of results df to one big dataframe
+    total.to_csv(path_out + '/' + filename+".csv") #download csv of our shp file location
