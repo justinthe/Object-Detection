@@ -11,6 +11,8 @@ calling class from file .py and save it to a variable
 calling class Model from mLearning.py, and save it to a variable named models
 calling class select_dir from tiling.py, and save it to a variable named directory
 """
+
+
 path4 = "G:/My Drive/"
 tiling = ml.Tiling() 
 models = ml.Model() 
@@ -63,7 +65,6 @@ def model():
     path_in = directory.folder()
     path_out = directory.folder()
 
-   
     try:
         path2=os.listdir(path_in)
         
@@ -104,4 +105,4 @@ def roof_model():
         return "the results is ready on " + str(path_out)
     
     except:
-        return"specify the input and output path correctly"
+        return "specify the input and output path correctly"
