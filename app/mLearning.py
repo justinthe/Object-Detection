@@ -140,4 +140,4 @@ class Model:
       
     print("starting concat" + str(n))
     total = pd.concat(total, ignore_index = True) #concatanate to list of results df to one big dataframe
-    total.to_csv(path_out + '/' + filename+".csv") #download csv of our shp file location
+    total.to_csv(path_out + '/' + filename + ".csv") #download csv of our shp file location
