@@ -1,5 +1,5 @@
 from app import app
-from app import mLearning as ml #calling file mLearning.py from folder app as ml
+from app import mLearning as ml # calling file mLearning.py from folder app as ml
 from flask import render_template
 import os, os.path
 import torch
@@ -55,11 +55,11 @@ input: a folder contain tiling folders every WP
 
 @app.route("/model")
 def model():
-    #calling our model
-    model_path = str(path4) + "best5.pt" #insert model file path located in drive
+    # calling our model
+    model_path = str(path4) + "best5.pt" # insert model file path located in drive
     model = torch.hub.load('ultralytics/yolov5', 'custom', model_path)  # default
     
-    #define in directpries to get image_path and out directories to save the result
+    # define in directpries to get image_path and out directories to save the result
     path_in = directory.folder()
     path_out = directory.folder()
 
@@ -91,8 +91,7 @@ def roof_model():
     #define in directpries to get image_path and out directories to save the result
     path_in = directory.folder()
     path_out = directory.folder()
-
-        
+   
     try:
         path2=os.listdir(path_in)
         
